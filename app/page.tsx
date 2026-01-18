@@ -28,28 +28,40 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="flex-shrink-0 bg-gradient-to-br from-card via-background to-card border-b border-border px-6 lg:px-10 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-1 w-12 bg-accent rounded" />
+      <section className="flex-shrink-0 bg-gradient-to-br from-card via-background to-card border-b border-border px-6 lg:px-10 py-12">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="h-1 w-8 bg-accent rounded" />
             <span className="text-xs font-bold text-accent uppercase tracking-wider">Premium Collection</span>
+            <div className="h-1 w-8 bg-accent rounded" />
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-3 text-balance">Innovation Meets Design</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl text-balance">
+          
+          {/* Main Heading */}
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-balance">
+            Innovation Meets Design
+          </h1>
+          
+          {/* Subtitle */}
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance mb-8">
             Discover cutting-edge technology crafted for creators, developers, and visionaries
           </p>
-          <div className="flex items-center gap-8 mt-6">
-            <div>
-              <div className="text-2xl font-bold text-accent">2M+</div>
-              <div className="text-xs text-muted-foreground">Happy Customers</div>
+          
+          {/* Stats */}
+          <div className="flex items-center justify-center gap-8 lg:gap-12">
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl font-bold text-accent">2M+</div>
+              <div className="text-xs text-muted-foreground mt-1">Happy Customers</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-accent">50+</div>
-              <div className="text-xs text-muted-foreground">Countries</div>
+            <div className="w-px h-10 bg-border" />
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl font-bold text-accent">50+</div>
+              <div className="text-xs text-muted-foreground mt-1">Countries</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-accent">99%</div>
-              <div className="text-xs text-muted-foreground">Satisfaction</div>
+            <div className="w-px h-10 bg-border" />
+            <div className="text-center">
+              <div className="text-2xl lg:text-3xl font-bold text-accent">99%</div>
+              <div className="text-xs text-muted-foreground mt-1">Satisfaction</div>
             </div>
           </div>
         </div>
