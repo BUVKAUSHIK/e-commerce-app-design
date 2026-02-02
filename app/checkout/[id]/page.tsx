@@ -6,6 +6,7 @@ import { products } from "@/lib/products"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { CheckoutButton } from "@/components/checkout-button"
 
 interface CheckoutPageProps {
   params: Promise<{ id: string }>
@@ -152,9 +153,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
               </div>
 
               {/* Submit Button */}
-              <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6">
-                Complete Purchase - ${total.toLocaleString()}
-              </Button>
+              <CheckoutButton productId={product.id} total={total} />
             </div>
 
             {/* Order Summary */}
