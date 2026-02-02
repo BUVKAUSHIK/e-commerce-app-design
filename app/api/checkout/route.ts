@@ -6,10 +6,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-01-28.clover",
 })
 
+// Discount codes - looked up SERVER-SIDE only
+const DISCOUNT_CODES: Record<string, number> = {
+  SAVE10: 0.10,    // 10% off
+  WELCOME20: 0.20, // 20% off
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { productId, quantity = 1 } = body
+    const { productId, quantity = 1, discountCode } = body
 
     if (!productId) {
       return NextResponse.json(
@@ -28,6 +34,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Look up discount SERVER-SIDE - never trust frontend amounts
+    let discountPercent = 0
+    if (discountCode && typeof discountCode === "string") {
+      const normalizedCode = discountCode.toUpperCase().trim()
+      discountPercent = DISCOUNT_CODES[normalizedCode] || 0
+      // Silently ignore invalid codes
+    }
+
+    // Calculate final price with discount
+    const finalPrice = product.price * (1 - discountPercent)
+
     // Get the origin for redirect URLs
     const origin = request.headers.get("origin") || "http://localhost:3000"
 
@@ -43,8 +60,8 @@ export async function POST(request: NextRequest) {
               description: product.description,
               images: product.image ? [`${origin}${product.image}`] : [],
             },
-            // Price is in cents - use SERVER-SIDE price only
-            unit_amount: Math.round(product.price * 100),
+            // Price is in cents - use SERVER-SIDE price with discount applied
+            unit_amount: Math.round(finalPrice * 100),
           },
           quantity: quantity,
         },
@@ -55,6 +72,10 @@ export async function POST(request: NextRequest) {
       metadata: {
         productId: product.id,
         productName: product.name,
+        ...(discountPercent > 0 && {
+          discountCode: discountCode,
+          discountPercent: `${discountPercent * 100}%`,
+        }),
       },
     })
 

@@ -1,53 +1,101 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Zap } from "lucide-react"
+import { useEffect, useState, useRef } from "react"
 
-interface HeroSectionProps {
-  onExplore: () => void
-}
+export function HeroSection() {
+  const [scrollY, setScrollY] = useState(0)
+  const containerRef = useRef<HTMLElement>(null)
 
-export function HeroSection({ onExplore }: HeroSectionProps) {
+  useEffect(() => {
+    const scrollContainer = document.getElementById("main-scroll")
+    
+    const handleScroll = () => {
+      if (scrollContainer) {
+        setScrollY(scrollContainer.scrollTop)
+      }
+    }
+
+    scrollContainer?.addEventListener("scroll", handleScroll, { passive: true })
+    return () => scrollContainer?.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Calculate animation values based on scroll
+  const opacity = Math.max(0, 1 - scrollY / 300)
+  const translateY = scrollY * 0.3
+  const scale = Math.max(0.9, 1 - scrollY / 1000)
+  const blur = Math.min(scrollY / 50, 8)
+
   return (
-    <section className="flex flex-col justify-center h-full px-6 lg:px-10">
-      <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20">
-          <Zap className="h-3 w-3 text-accent" />
-          <span className="text-xs font-medium text-accent uppercase tracking-wider">New Release</span>
+    <section
+      ref={containerRef}
+      className="flex-shrink-0 bg-gradient-to-br from-card via-background to-card border-b border-border px-6 lg:px-10 py-12 overflow-hidden"
+      style={{
+        opacity: Math.max(0.3, opacity),
+      }}
+    >
+      <div
+        className="max-w-4xl mx-auto text-center transition-transform duration-100 ease-out"
+        style={{
+          transform: `translateY(${translateY}px) scale(${scale})`,
+          filter: `blur(${blur}px)`,
+        }}
+      >
+        {/* Badge */}
+        <div 
+          className="flex items-center justify-center gap-2 mb-4"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 150),
+            transform: `translateY(${scrollY * 0.5}px)`,
+          }}
+        >
+          <div className="h-1 w-8 bg-accent rounded" />
+          <span className="text-xs font-bold text-accent uppercase tracking-wider">Premium Collection</span>
+          <div className="h-1 w-8 bg-accent rounded" />
         </div>
 
-        <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-balance">
-          The future of
-          <br />
-          <span className="text-muted-foreground">productivity.</span>
+        {/* Main Heading */}
+        <h1
+          className="text-4xl lg:text-5xl font-bold mb-4 text-balance"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 200),
+            transform: `translateY(${scrollY * 0.4}px) scale(${Math.max(0.95, 1 - scrollY / 2000)})`,
+          }}
+        >
+          Innovation Meets Design
         </h1>
 
-        <p className="text-muted-foreground text-base lg:text-lg max-w-md leading-relaxed">
-          Revolutionary hardware engineered for peak performance. Built for creators, developers, and visionaries.
+        {/* Subtitle */}
+        <p
+          className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance mb-8"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 180),
+            transform: `translateY(${scrollY * 0.35}px)`,
+          }}
+        >
+          Discover cutting-edge technology crafted for creators, developers, and visionaries
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-2">
-          <Button onClick={onExplore} className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Explore Product
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-          <Button variant="outline" className="border-border hover:bg-secondary bg-transparent">
-            Watch Demo
-          </Button>
-        </div>
-
-        <div className="flex items-center gap-8 pt-6 border-t border-border">
-          <div>
-            <p className="text-2xl font-bold">4.9★</p>
-            <p className="text-xs text-muted-foreground">2,847 reviews</p>
+        {/* Stats */}
+        <div
+          className="flex items-center justify-center gap-8 lg:gap-12"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 250),
+            transform: `translateY(${scrollY * 0.25}px)`,
+          }}
+        >
+          <div className="text-center">
+            <div className="text-2xl lg:text-3xl font-bold text-accent">2M+</div>
+            <div className="text-xs text-muted-foreground mt-1">Happy Customers</div>
           </div>
-          <div>
-            <p className="text-2xl font-bold">50K+</p>
-            <p className="text-xs text-muted-foreground">Units sold</p>
+          <div className="w-px h-10 bg-border" />
+          <div className="text-center">
+            <div className="text-2xl lg:text-3xl font-bold text-accent">50+</div>
+            <div className="text-xs text-muted-foreground mt-1">Countries</div>
           </div>
-          <div>
-            <p className="text-2xl font-bold">2yr</p>
-            <p className="text-xs text-muted-foreground">Warranty</p>
+          <div className="w-px h-10 bg-border" />
+          <div className="text-center">
+            <div className="text-2xl lg:text-3xl font-bold text-accent">99%</div>
+            <div className="text-xs text-muted-foreground mt-1">Satisfaction</div>
           </div>
         </div>
       </div>
