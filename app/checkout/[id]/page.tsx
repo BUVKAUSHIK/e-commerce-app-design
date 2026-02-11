@@ -153,7 +153,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
               </div>
 
               {/* Discount & Submit */}
-              <CheckoutForm productId={product.id} total={total} />
+              <CheckoutForm productId={product.id} productName={product.name} total={total} />
             </div>
 
             {/* Order Summary */}

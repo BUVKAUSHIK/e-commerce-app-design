@@ -1,25 +1,54 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Loader2, Tag, Check } from "lucide-react"
+import {
+  trackCheckoutInitiated,
+  trackPaymentFailed,
+  trackPaymentSubmitted,
+} from "@/lib/analytics"
 
 interface CheckoutFormProps {
   productId: string
+  productName: string
   total: number
 }
 
-export function CheckoutForm({ productId, total }: CheckoutFormProps) {
+export function CheckoutForm({ productId, productName, total }: CheckoutFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [discountCode, setDiscountCode] = useState("")
   const [discountApplied, setDiscountApplied] = useState(false)
+  const searchParams = useSearchParams()
+  const hasTrackedInitiated = useRef(false)
+  const hasTrackedCancelled = useRef(false)
+
+  useEffect(() => {
+    if (hasTrackedInitiated.current) {
+      return
+    }
+    trackCheckoutInitiated(productId, productName)
+    hasTrackedInitiated.current = true
+  }, [productId, productName])
+
+  useEffect(() => {
+    if (hasTrackedCancelled.current) {
+      return
+    }
+    if (searchParams.get("status") === "cancelled") {
+      trackPaymentFailed("cancelled", productId)
+      hasTrackedCancelled.current = true
+    }
+  }, [productId, searchParams])
 
   const handleCheckout = async () => {
     setIsLoading(true)
     setError(null)
+    trackPaymentSubmitted(productId)
 
     try {
       const response = await fetch("/api/checkout", {
@@ -46,6 +75,7 @@ export function CheckoutForm({ productId, total }: CheckoutFormProps) {
         throw new Error("No checkout URL returned")
       }
     } catch (err) {
+      trackPaymentFailed("api_or_network_error", productId)
       setError(err instanceof Error ? err.message : "Something went wrong")
       setIsLoading(false)
     }

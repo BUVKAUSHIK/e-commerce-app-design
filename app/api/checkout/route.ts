@@ -67,8 +67,8 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: "payment",
-      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/checkout/${productId}`,
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}&productId=${product.id}`,
+      cancel_url: `${origin}/checkout/${productId}?status=cancelled`,
       metadata: {
         productId: product.id,
         productName: product.name,

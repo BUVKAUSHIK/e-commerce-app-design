@@ -1,10 +1,12 @@
 import Link from "next/link"
 import { CheckCircle2, Mail, ArrowRight, ShoppingBag } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { SuccessAnalytics } from "@/components/success-analytics"
 
 export default function SuccessPage() {
   return (
     <div className="h-screen w-screen overflow-hidden bg-background flex flex-col">
+      <SuccessAnalytics />
       {/* Header */}
       <header className="flex items-center justify-between px-6 lg:px-10 h-16 border-b border-border bg-card/50 backdrop-blur-sm flex-shrink-0">
         <Link href="/" className="flex items-center gap-3">

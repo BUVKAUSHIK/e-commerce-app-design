@@ -4,6 +4,7 @@ import { ShoppingBag, Search } from "lucide-react"
 import { products } from "@/lib/products"
 import { Button } from "@/components/ui/button"
 import { HeroSection } from "@/components/hero-section"
+import { TrackedProductLink } from "@/components/tracked-product-link"
 
 export default function Home() {
   return (
@@ -65,9 +66,11 @@ export default function Home() {
                       <span className="text-xs text-muted-foreground whitespace-nowrap">{product.category}</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description}</p>
-                    <Link href={`/product/${product.id}`}>
-                      <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">View Details</Button>
-                    </Link>
+                    <TrackedProductLink
+                      href={`/product/${product.id}`}
+                      productId={product.id}
+                      productName={product.name}
+                    />
                   </div>
                 </div>
               ))}
