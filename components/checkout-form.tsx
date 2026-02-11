@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Loader2, Tag, Check } from "lucide-react"
 import {
+  trackCheckoutButtonVariantExposed,
   trackCheckoutInitiated,
   trackPaymentFailed,
   trackPaymentSubmitted,
@@ -27,9 +28,11 @@ export function CheckoutForm({ productId, productName, total }: CheckoutFormProp
   const posthog = usePostHog()
   const variant = posthog?.getFeatureFlag("checkout-button-variant")
   const isTestVariant = variant === "test"
+  const checkoutVariant: "control" | "test" = isTestVariant ? "test" : "control"
   const searchParams = useSearchParams()
   const hasTrackedInitiated = useRef(false)
   const hasTrackedCancelled = useRef(false)
+  const hasTrackedVariantExposure = useRef(false)
 
   useEffect(() => {
     if (hasTrackedInitiated.current) {
@@ -49,10 +52,18 @@ export function CheckoutForm({ productId, productName, total }: CheckoutFormProp
     }
   }, [productId, searchParams])
 
+  useEffect(() => {
+    if (hasTrackedVariantExposure.current || typeof variant === "undefined") {
+      return
+    }
+    trackCheckoutButtonVariantExposed(checkoutVariant)
+    hasTrackedVariantExposure.current = true
+  }, [checkoutVariant, variant])
+
   const handleCheckout = async () => {
     setIsLoading(true)
     setError(null)
-    trackPaymentSubmitted(productId)
+    trackPaymentSubmitted(productId, checkoutVariant)
 
     try {
       const response = await fetch("/api/checkout", {

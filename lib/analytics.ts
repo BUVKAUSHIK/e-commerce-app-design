@@ -34,8 +34,16 @@ export function trackCheckoutInitiated(productId: string, productName: string) {
   })
 }
 
-export function trackPaymentSubmitted(productId: string) {
-  captureEvent("payment_submitted", { product_id: productId })
+export function trackCheckoutButtonVariantExposed(variant: "control" | "test") {
+  captureEvent("checkout_button_variant_exposed", { variant })
+}
+
+export function trackPaymentSubmitted(productId: string, variant?: "control" | "test") {
+  const properties: Record<string, string> = { product_id: productId }
+  if (variant) {
+    properties.variant = variant
+  }
+  captureEvent("payment_submitted", properties)
 }
 
 export function trackPaymentSucceeded(productId?: string) {
