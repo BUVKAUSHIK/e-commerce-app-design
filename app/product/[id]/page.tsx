@@ -1,10 +1,9 @@
 import Link from "next/link"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Check, ShoppingBag, Star } from "lucide-react"
 import { products } from "@/lib/products"
-import { Button } from "@/components/ui/button"
 import { TrackedBuyNowLink } from "@/components/tracked-buy-now-link"
+import { ProductImageGallery } from "@/components/product-image-gallery"
 
 interface ProductPageProps {
   params: Promise<{ id: string }>
@@ -50,13 +49,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-10">
-            {/* Product Image */}
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-card border border-border">
-              <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
-              <div className="absolute top-4 left-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-bold">
-                {product.category}
-              </div>
-            </div>
+            {/* Product Image Gallery */}
+            <ProductImageGallery
+              images={product.images}
+              productName={product.name}
+              category={product.category}
+            />
 
             {/* Product Info */}
             <div className="flex flex-col">

@@ -4,7 +4,7 @@ export interface Product {
   description: string
   price: number
   category: string
-  image: string
+  images: string[]
   specs: string[]
   features: string[]
 }
@@ -16,7 +16,12 @@ export const products: Product[] = [
     description: "Revolutionary AI-powered laptop with neural processing",
     price: 2499,
     category: "Laptops",
-    image: "/minimalist-laptop-product-photo-on-dark-background.jpg",
+    images: [
+      "/products/novapro-x1/main.jpg",
+      "/products/novapro-x1/angle.jpg",
+      "/products/novapro-x1/keyboard.jpg",
+      "/products/novapro-x1/lifestyle.jpg",
+    ],
     specs: ["M3 Pro Chip", "32GB RAM", "1TB SSD", '16" Display'],
     features: ["AI-enhanced performance", "All-day battery life", "Retina XDR display", "Advanced thermal design"],
   },
@@ -26,7 +31,12 @@ export const products: Product[] = [
     description: "Ultra-portable powerhouse for creators on the go",
     price: 1899,
     category: "Laptops",
-    image: "/sleek-ultrabook-laptop-silver.jpg",
+    images: [
+      "/products/novabook-air/main.jpg",
+      "/products/novabook-air/side.jpg",
+      "/products/novabook-air/ports.jpg",
+      "/products/novabook-air/lifestyle.jpg",
+    ],
     specs: ["M2 Chip", "16GB RAM", "512GB SSD", '13" Display'],
     features: ["Featherweight design", "18-hour battery", "True Tone display", "Fanless cooling"],
   },
@@ -36,7 +46,12 @@ export const products: Product[] = [
     description: "Wireless earbuds with adaptive audio technology",
     price: 299,
     category: "Audio",
-    image: "/premium-wireless-earbuds-dark-case.jpg",
+    images: [
+      "/products/novapods-pro/main.jpg",
+      "/products/novapods-pro/case-open.jpg",
+      "/products/novapods-pro/earbud-detail.jpg",
+      "/products/novapods-pro/lifestyle.jpg",
+    ],
     specs: ["Active Noise Cancellation", "30hr Battery", "Spatial Audio", "USB-C"],
     features: ["Adaptive EQ", "Transparency mode", "Water resistant", "Fast charging"],
   },
@@ -46,7 +61,12 @@ export const products: Product[] = [
     description: "Professional-grade monitor for creative workflows",
     price: 1499,
     category: "Displays",
-    image: "/modern-4k-monitor-display-dark-background.jpg",
+    images: [
+      "/products/novadisplay-4k/main.jpg",
+      "/products/novadisplay-4k/side.jpg",
+      "/products/novadisplay-4k/ports.jpg",
+      "/products/novadisplay-4k/lifestyle.jpg",
+    ],
     specs: ['27" 4K', "HDR1000", "120Hz", "Thunderbolt 4"],
     features: ["P3 wide color", "True color accuracy", "Height adjustable", "USB-C hub"],
   },
@@ -56,7 +76,12 @@ export const products: Product[] = [
     description: "Mechanical keyboard with customizable RGB lighting",
     price: 199,
     category: "Accessories",
-    image: "/premium-mechanical-keyboard-dark-theme.jpg",
+    images: [
+      "/products/novakeyboard/main.jpg",
+      "/products/novakeyboard/angle.jpg",
+      "/products/novakeyboard/keys-detail.jpg",
+      "/products/novakeyboard/rgb-lighting.jpg",
+    ],
     specs: ["Mechanical Switches", "RGB Backlit", "Wireless", "Aluminum Body"],
     features: ["Hot-swappable keys", "3-device pairing", "Rechargeable", "Ergonomic design"],
   },
@@ -66,7 +91,12 @@ export const products: Product[] = [
     description: "Precision mouse with ergonomic design for all-day comfort",
     price: 129,
     category: "Accessories",
-    image: "/sleek-wireless-mouse-black-minimalist.jpg",
+    images: [
+      "/products/novamouse-elite/main.jpg",
+      "/products/novamouse-elite/side.jpg",
+      "/products/novamouse-elite/bottom.jpg",
+      "/products/novamouse-elite/lifestyle.jpg",
+    ],
     specs: ["8000 DPI", "Wireless", "USB-C", "Multi-device"],
     features: ["Ergonomic grip", "Silent clicks", "Precision tracking", "70-day battery"],
   },

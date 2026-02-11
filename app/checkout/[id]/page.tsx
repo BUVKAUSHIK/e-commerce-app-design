@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { ArrowLeft, CreditCard, Lock, ShieldCheck } from "lucide-react"
 import { products } from "@/lib/products"
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CheckoutForm } from "@/components/checkout-form"
+import { ProductCardImage } from "@/components/product-card-image"
 
 interface CheckoutPageProps {
   params: Promise<{ id: string }>
@@ -164,7 +164,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
                 {/* Product */}
                 <div className="flex gap-4 pb-4 border-b border-border">
                   <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
-                    <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+                    <ProductCardImage src={product.images[0] || "/placeholder.svg"} alt={product.name} className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold truncate">{product.name}</h3>

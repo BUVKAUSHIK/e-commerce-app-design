@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { usePostHog } from "posthog-js/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -23,6 +24,9 @@ export function CheckoutForm({ productId, productName, total }: CheckoutFormProp
   const [error, setError] = useState<string | null>(null)
   const [discountCode, setDiscountCode] = useState("")
   const [discountApplied, setDiscountApplied] = useState(false)
+  const posthog = usePostHog()
+  const variant = posthog?.getFeatureFlag("checkout-button-variant")
+  const isTestVariant = variant === "test"
   const searchParams = useSearchParams()
   const hasTrackedInitiated = useRef(false)
   const hasTrackedCancelled = useRef(false)
@@ -139,9 +143,12 @@ export function CheckoutForm({ productId, productName, total }: CheckoutFormProp
       <div className="space-y-2">
         <Button
           size="lg"
-          className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6"
+          className={`w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6${
+            isTestVariant ? " shadow-lg" : ""
+          }`}
           onClick={handleCheckout}
           disabled={isLoading}
+          aria-label={`Order total $${total.toLocaleString()}`}
         >
           {isLoading ? (
             <>
@@ -149,7 +156,7 @@ export function CheckoutForm({ productId, productName, total }: CheckoutFormProp
               Processing...
             </>
           ) : (
-            `Complete Purchase - $${total.toLocaleString()}`
+            isTestVariant ? "Complete Purchase" : "Place Order"
           )}
         </Button>
         {error && (

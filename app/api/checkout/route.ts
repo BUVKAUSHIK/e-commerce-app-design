@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
             product_data: {
               name: product.name,
               description: product.description,
-              images: product.image ? [`${origin}${product.image}`] : [],
+              images: product.images[0] ? [`${origin}${product.images[0]}`] : [],
             },
             // Price is in cents - use SERVER-SIDE price with discount applied
             unit_amount: Math.round(finalPrice * 100),
