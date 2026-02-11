@@ -20,6 +20,13 @@ export function trackClickedProduct(productId: string, productName: string) {
   })
 }
 
+export function trackClickedBuyNow(productId: string, productName: string) {
+  captureEvent("clicked_buy_now", {
+    product_id: productId,
+    product_name: productName,
+  })
+}
+
 export function trackCheckoutInitiated(productId: string, productName: string) {
   captureEvent("checkout_initiated", {
     product_id: productId,

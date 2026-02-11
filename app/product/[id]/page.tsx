@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check, ShoppingBag, Star } from "lucide-react"
 import { products } from "@/lib/products"
 import { Button } from "@/components/ui/button"
+import { TrackedBuyNowLink } from "@/components/tracked-buy-now-link"
 
 interface ProductPageProps {
   params: Promise<{ id: string }>
@@ -99,11 +100,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Buy Now Button */}
-              <Link href={`/checkout/${product.id}`} className="mt-auto">
-                <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6">
-                  Buy Now - ${product.price.toLocaleString()}
-                </Button>
-              </Link>
+              <TrackedBuyNowLink
+                href={`/checkout/${product.id}`}
+                productId={product.id}
+                productName={product.name}
+                label={`Buy Now - $${product.price.toLocaleString()}`}
+              />
             </div>
           </div>
         </div>
