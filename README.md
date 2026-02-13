@@ -14,13 +14,7 @@ Any changes you make to your deployed app will be automatically pushed to this r
 
 Your project is live at:
 
-**[https://vercel.com/buvkaushik55-2085s-projects/v0-one-page-e-commerce](https://vercel.com/buvkaushik55-2085s-projects/v0-one-page-e-commerce)**
-
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.app/chat/c7WSpHRc8ZF](https://v0.app/chat/c7WSpHRc8ZF)**
+https://v0-one-page-e-commerce-pi.vercel.app/
 
 ## How It Works
 
